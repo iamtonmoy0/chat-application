@@ -1,28 +1,39 @@
 import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../features/auth/authApi";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const [register, { data, isLoading, isError }] = useRegisterMutation();
   useEffect(() => {
-    console.log(data, isError);
-  }, [data, isError]);
+    if (data) {
+      console.log(data);
+      navigate("/chat");
+    }
+    if (isError) {
+      window.alert("failed to register account");
+    }
+  }, [data, isError, isLoading]);
 
   // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       register({
-        name,
-        email,
-        password,
+        name: name,
+        email: email,
+        password: password,
       });
+      // console.log(name, email, password, confirmPassword);
+      // console.log(data);
+    } else {
+      console.log("password not matched");
     }
-    console.log(name, email, password, confirmPassword);
   };
   return (
     <div className="grid place-items-center h-screen bg-[#F9FAFB">
@@ -44,7 +55,7 @@ export default function Register() {
                 <input
                   id="name"
                   name="Name"
-                  type="Name"
+                  type="text"
                   autoComplete="Name"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
@@ -92,7 +103,7 @@ export default function Register() {
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="confirmPassword"
+                  type="password"
                   autoComplete="current-confirmPassword"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"

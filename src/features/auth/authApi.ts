@@ -13,8 +13,11 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          dispatch(userLoggedIn(result));
-        } catch (error) {}
+          // console.log(result);
+          dispatch(userLoggedIn(result.data.data));
+        } catch (error) {
+          console.log("Failed to login");
+        }
       },
     }),
     // login
@@ -28,7 +31,9 @@ export const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
           dispatch(userLoggedIn(result));
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       },
     }),
   }),
