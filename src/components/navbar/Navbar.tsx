@@ -1,4 +1,12 @@
+import { useDispatch } from "react-redux";
+import { userLoggedOut } from "../../features/auth/authSlice";
+
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(userLoggedOut());
+    localStorage.removeItem("auth");
+  };
   return (
     <nav className="border-general sticky top-0 z-40 border-b bg-violet-700 transition-colors">
       <div className="max-w-7xl mx-auto">
@@ -6,7 +14,7 @@ export default function Navbar() {
           <img className="h-10" src="./assets/lws-logo-dark.svg" />
           <ul>
             <li className="text-white">
-              <a href="#">Logout</a>
+              <button onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>

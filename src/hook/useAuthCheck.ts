@@ -12,10 +12,8 @@ export default function useAuthCheck(): boolean {
       console.log(auth.token);
       if (auth?.token && auth?.user) {
         dispatch(userLoggedIn({ token: auth.token, user: auth.user }));
-        setAuthCheck(true);
-      } else {
-        setAuthCheck(false);
       }
+      setAuthCheck(true);
     }
   }, [dispatch, setAuthCheck]);
   return authCheck;
