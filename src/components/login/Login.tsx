@@ -8,14 +8,18 @@ export default function Login() {
   const navigate = useNavigate();
   // rtk
   const [login, { data, isLoading, isError }] = useLoginMutation();
+  // handle submit
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     login({ email, password });
   };
+
   let content = null;
+
   useEffect(() => {
     if (data) {
-      navigate("/chat");
+      console.log(data);
+      // navigate("/chat");
     }
     if (isLoading) {
       content = <p>Loading please wait!</p>;
@@ -23,7 +27,7 @@ export default function Login() {
     if (isError) {
       content = <p>Error occurred while logging in.</p>;
     }
-  }, [data, navigate]);
+  }, [data, navigate, content, isError, isLoading]);
 
   return (
     <div className="grid place-items-center h-screen bg-[#F9FAFB">
