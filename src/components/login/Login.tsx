@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router-dom";
 
@@ -8,13 +8,20 @@ export default function Login() {
   const navigate = useNavigate();
   // rtk
   const [login, { data, isLoading, isError }] = useLoginMutation();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     login({ email, password });
   };
+  let content = null;
   useEffect(() => {
     if (data) {
       navigate("/chat");
+    }
+    if (isLoading) {
+      content = <p>Loading please wait!</p>;
+    }
+    if (isError) {
+      content = <p>Error occurred while logging in.</p>;
     }
   }, [data, navigate]);
 
@@ -88,6 +95,7 @@ export default function Login() {
               </button>
             </div>
           </form>
+          {content}
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export const authApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      async onQueryStarted({ queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
           // console.log(result);
@@ -27,7 +27,7 @@ export const authApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      async onQueryStarted({ queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
           dispatch(userLoggedIn(result.data.data));
