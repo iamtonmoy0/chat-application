@@ -18,7 +18,7 @@ export default function Register() {
     if (isError) {
       window.alert("failed to register account");
     }
-  }, [data, isError, isLoading]);
+  }, [data, isError, isLoading, navigate]);
 
   // handle submit
   const handleSubmit = (e: FormEvent) => {
