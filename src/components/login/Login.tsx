@@ -18,8 +18,9 @@ export default function Login() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-      // navigate("/chat");
+      localStorage.setItem("auth", JSON.stringify(data.data));
+      // console.log(data);
+      navigate("/chat");
     }
     if (isLoading) {
       content = <p>Loading please wait!</p>;
