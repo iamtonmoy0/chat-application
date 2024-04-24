@@ -1,5 +1,6 @@
+import { Outlet } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
-import Blank from "./Blank";
+// import Blank from "./Blank";
 import Sidebar from "./Sidebar";
 
 export default function Chat() {
@@ -12,7 +13,8 @@ export default function Chat() {
             <Sidebar />
             <div className="w-full lg:col-span-2 lg:block">
               <div className="w-full grid conversation-row-grid">
-                <Blank />
+                {/* <Blank /> */}
+                {/* <Outlet /> */}
               </div>
             </div>
           </div>

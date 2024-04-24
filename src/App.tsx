@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
-// import useAuthCheck from "./hook/useAuthCheck";
+import useAuthCheck from "./hook/useAuthCheck";
 
 function App() {
-  // const auth = useAuthCheck();
-  // return !auth ? (
-  //   <div>Loading please wait</div>
-  // ) :
+  // const [loading, setLoading] = useState(false);
+  useAuthCheck();
+
   return (
     <>
       <Outlet />

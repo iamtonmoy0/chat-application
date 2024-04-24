@@ -14,21 +14,13 @@ export default function Login() {
     login({ email, password });
   };
 
-  let content = null;
-
   useEffect(() => {
     if (data) {
-      localStorage.setItem("auth", JSON.stringify(data.data));
       // console.log(data);
-      navigate("/chat");
+      // localStorage.setItem("auth", JSON.stringify(data));
+      // navigate("/chat");
     }
-    if (isLoading) {
-      content = <p>Loading please wait!</p>;
-    }
-    if (isError) {
-      content = <p>Error occurred while logging in.</p>;
-    }
-  }, [data, navigate, content, isError, isLoading]);
+  }, [data, navigate]);
 
   return (
     <div className="grid place-items-center h-screen bg-[#F9FAFB">
@@ -100,7 +92,8 @@ export default function Login() {
               </button>
             </div>
           </form>
-          {content}
+          {isLoading && <p>Loading please wait!</p>}
+          {isError && <p>Error occurred while logging in.</p>}
         </div>
       </div>
     </div>
