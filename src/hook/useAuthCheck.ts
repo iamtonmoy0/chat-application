@@ -9,7 +9,7 @@ export default function useAuthCheck(): boolean {
     const localAuth = localStorage.getItem("auth");
     if (localAuth) {
       const auth = JSON.parse(localAuth);
-      console.log(auth.token);
+      // console.log(auth.token);
       if (auth?.token && auth?.user) {
         dispatch(userLoggedIn({ token: auth.token, user: auth.user }));
       }
