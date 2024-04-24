@@ -8,7 +8,7 @@ interface PublicRouteProps {
 
 const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   const isLoggedIn = useAuth();
-  return !isLoggedIn ? children : <Navigate to="/" />;
+  return !isLoggedIn ? children : <Navigate to="/chat" />;
 };
 
 export default PublicRoute;

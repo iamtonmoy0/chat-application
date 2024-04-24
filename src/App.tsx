@@ -5,11 +5,7 @@ function App() {
   // const auth = useAuthCheck();
   // return !auth ? (
   //   <div>Loading please wait</div>
-  // ) : (
-  //   <>
-  //     <Outlet />
-  //   </>
-  // );
+  // ) :
   return (
     <>
       <Outlet />
