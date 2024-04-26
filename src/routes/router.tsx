@@ -5,7 +5,8 @@ import Login from "../components/login/Login";
 import Chat from "../components/chat/Chat";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./publicRoute/PublicRoute";
-import Blank from "../components/chat/Blank";
+// import Blank from "../components/chat/Blank";
+import MessagePage from "../components/pages/MessagePage";
 
 const router = createBrowserRouter([
   {
@@ -22,23 +23,24 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/register",
+        path: "register",
         element: (
           <PublicRoute>
             <Register />
           </PublicRoute>
         ),
       },
-      {
-        path: "/chat",
-        element: (
-          <PrivateRoute>
-            <Chat />
-          </PrivateRoute>
-        ),
-        children: [{ path: "/chat/:id", element: <Blank /> }],
-      },
+      { path: "message", element: <MessagePage /> },
     ],
+  },
+  {
+    path: "/chat",
+    element: (
+      <PrivateRoute>
+        <Chat />
+      </PrivateRoute>
+    ),
+    children: [{ path: "/chat/:id", element: <MessagePage /> }],
   },
 ]);
 

@@ -14,6 +14,7 @@ export default function ChatItems() {
     isLoading,
     isError,
   } = useGetConversationsQuery(email);
+  console.log(conversations);
   let content = null;
   if (isLoading) {
     content = <p>loading ....</p>;

@@ -4,8 +4,8 @@ import { userLoggedOut } from "../../features/auth/authSlice";
 export default function Navbar() {
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(userLoggedOut());
     localStorage.removeItem("auth");
+    dispatch(userLoggedOut());
   };
   return (
     <nav className="border-general sticky top-0 z-40 border-b bg-violet-700 transition-colors">

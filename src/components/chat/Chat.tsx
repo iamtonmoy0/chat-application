@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import Sidebar from "./Sidebar";
-import Blank from "./Blank";
 
 export default function Chat() {
   return (
