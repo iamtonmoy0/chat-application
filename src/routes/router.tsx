@@ -5,6 +5,7 @@ import Login from "../components/login/Login";
 import Chat from "../components/chat/Chat";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./publicRoute/PublicRoute";
+import Blank from "../components/chat/Blank";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
             <Chat />
           </PrivateRoute>
         ),
+        children: [{ path: "/chat/:id", element: <Blank /> }],
       },
     ],
   },

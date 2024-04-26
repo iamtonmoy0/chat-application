@@ -2,6 +2,9 @@ import { useSelector } from "react-redux";
 import { useGetConversationsQuery } from "../../features/conversation/conversationApi";
 import ChatItem from "./ChatItem";
 import RootState from "../../types/types";
+import getParticipant from "../../utils/getParticipants";
+import gravatarUrl from "gravatar-url";
+import { Link } from "react-router-dom";
 
 export default function ChatItems() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -17,16 +20,21 @@ export default function ChatItems() {
   } else if (!isLoading && isError) {
     content = <p>Error occured</p>;
   } else {
-    content = conversations?.map((conv) => (
-      <li key={conv.id}>
-        <ChatItem
-          avatar="https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010__340.jpg"
-          name="Saad Hasan"
-          lastMessage="bye"
-          lastTime="25 minutes"
-        />
-      </li>
-    ));
+    content = conversations?.map((conv) => {
+      const data = getParticipant(conv.users, email);
+      return (
+        <li key={conv._id}>
+          <Link to={`/chat/${conv._id}`}>
+            <ChatItem
+              avatar={gravatarUrl(data.email, { size: 80 })}
+              name={data.name}
+              lastMessage="bye"
+              lastTime="25 minutes"
+            />
+          </Link>
+        </li>
+      );
+    });
   }
   return <ul>{content}</ul>;
 }
