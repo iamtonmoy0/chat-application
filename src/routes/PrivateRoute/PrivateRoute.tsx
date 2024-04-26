@@ -8,8 +8,8 @@ interface PrivateRouteProps {
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
   const isLoggedIn = useAuth();
-
+  console.log("i am private route");
   return isLoggedIn ? children : <Navigate to={"/"} />;
-}
+};
 
 export default PrivateRoute;

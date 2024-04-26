@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 
 export default function ChatItems() {
   const { user } = useSelector((state: RootState) => state.auth);
-  const { email } = user;
+  const { email } = user || null;
   const {
     data: conversations,
     isLoading,
     isError,
   } = useGetConversationsQuery(email);
-  console.log(conversations);
+  // console.log(conversations);
   let content = null;
   if (isLoading) {
     content = <p>loading ....</p>;
@@ -22,6 +22,7 @@ export default function ChatItems() {
     content = <p>Error occured</p>;
   } else {
     content = conversations?.map((conv) => {
+      console.log(conv._id);
       const data = getParticipant(conv.users, email);
       return (
         <li key={conv._id}>

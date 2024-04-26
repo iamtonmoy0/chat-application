@@ -2,17 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Register from "../components/register/Register";
 import Login from "../components/login/Login";
-import Chat from "../components/chat/Chat";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import PublicRoute from "./publicRoute/PublicRoute";
 // import Blank from "../components/chat/Blank";
-import MessagePage from "../components/pages/MessagePage";
+import MessagePage from "../components/pages/Inbox";
+import Conversations from "../components/pages/Conversations";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-
     children: [
       {
         path: "/",
@@ -34,13 +33,13 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/chat",
+    path: "chat",
     element: (
       <PrivateRoute>
-        <Chat />
+        <Conversations />
       </PrivateRoute>
     ),
-    children: [{ path: "/chat/:id", element: <MessagePage /> }],
+    children: [{ path: "chat/:id", element: <MessagePage /> }],
   },
 ]);
 
