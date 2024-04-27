@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../features/auth/authApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -115,21 +115,14 @@ export default function Register() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-violet-600 focus:ring-violet-500 border-gray-300 rounded"
-                />
                 <label
                   htmlFor="accept-terms"
                   className="ml-2  text-sm text-gray-900 flex "
                 >
-                  <p>Agreed with the</p>
-                  <p className="text-blue-800 pl-1 cursor-pointer">
-                    {" "}
-                    terms and condition
-                  </p>
+                  <p>Already has an account?</p>
+                  <Link to={"/"} className="text-blue-800 pl-1 cursor-pointer">
+                    Login!
+                  </Link>
                 </label>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,8 +17,8 @@ export default function Login() {
   useEffect(() => {
     if (data) {
       // console.log(data);
-      // localStorage.setItem("auth", JSON.stringify(data));
-      // navigate("/chat");
+      localStorage.setItem("auth", JSON.stringify(data));
+      navigate("/chat");
     }
   }, [data, navigate]);
 
@@ -76,9 +76,12 @@ export default function Login() {
               <div className="text-sm">
                 <a
                   href="#"
-                  className="font-medium text-violet-600 hover:text-violet-500"
+                  className="font-medium text-gray-600 hover:text-violet-500"
                 >
-                  Forgot your password?
+                  New to site?{" "}
+                  <Link to={"/register"} className="text-blue-600">
+                    Register
+                  </Link>
                 </a>
               </div>
             </div>

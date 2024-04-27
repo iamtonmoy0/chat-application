@@ -3,9 +3,9 @@ import useAuth from "../../hooks/useAuth";
 import useAuthCheck from "../../hooks/useAuthCheck";
 
 const PrivateRoute = ({ children }) => {
-useAuthCheck()
+  useAuthCheck();
   const isLoggedIn = useAuth();
-  console.log("i am private route");
+  // console.log("i am private route");
   return isLoggedIn ? children : <Navigate to={"/inbox"} />;
 };
 

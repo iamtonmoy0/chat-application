@@ -21,7 +21,7 @@ export default function ChatItems() {
     content = <p>Error occured</p>;
   } else {
     content = conversations?.map((conv) => {
-      console.log(conv._id);
+      // console.log(conv._id);
       const data = getParticipant(conv.users, email);
       return (
         <li key={conv._id}>

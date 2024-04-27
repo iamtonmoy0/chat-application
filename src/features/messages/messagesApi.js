@@ -1,12 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { apiSlice } from "../api/apiSlice";
 
-const initialState = {};
-
-const conversationSlice = createSlice({
-  name: "conversation",
-  initialState,
-  reducers: {},
+const messageApi = apiSlice.injectEndpoints({
+  endpoints: (builders) => ({
+    getMessages: builders.query({
+      query: (id) => {
+        return `/messages?conversationId= ${id}&limit=5`;
+      },
+    }),
+  }),
 });
 
-export const {} = conversationSlice.actions;
-export default conversationSlice.reducer;
+export const { useGetMessagesQuery } = messageApi;
