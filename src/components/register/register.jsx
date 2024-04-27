@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRegisterMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export default function Register() {
   }, [data, isError, isLoading, navigate]);
 
   // handle submit
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       register({

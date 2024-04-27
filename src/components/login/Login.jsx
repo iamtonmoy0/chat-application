@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoginMutation } from "../../features/auth/authApi";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ export default function Login() {
   // rtk
   const [login, { data, isLoading, isError }] = useLoginMutation();
   // handle submit
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     login({ email, password });
   };

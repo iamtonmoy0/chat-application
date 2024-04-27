@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
-import { useGetConversationsQuery } from "../../features/conversation/conversationApi";
+import { useGetConversationsQuery } from "../../features/conversations/conversationsApi";
 import ChatItem from "./ChatItem";
-import RootState from "../../types/types";
 import getParticipant from "../../utils/getParticipants";
 import gravatarUrl from "gravatar-url";
 import { Link } from "react-router-dom";
 
 export default function ChatItems() {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { email } = user || null;
   const {
     data: conversations,
@@ -26,7 +25,7 @@ export default function ChatItems() {
       const data = getParticipant(conv.users, email);
       return (
         <li key={conv._id}>
-          <Link to={`/chat/${conv._id}`}>
+          <Link to={`/inbox/${conv._id}`}>
             <ChatItem
               avatar={gravatarUrl(data.email, { size: 80 })}
               name={data.name}

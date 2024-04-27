@@ -1,8 +1,7 @@
-import RootState from "../types/types";
 import { useSelector } from "react-redux";
 
-export default function useAuth(): boolean {
-  const auth = useSelector((state: RootState) => state.auth);
+export default function useAuth() {
+  const auth = useSelector((state) => state.auth);
   if (auth?.token && auth?.user) {
     if (localStorage.getItem("auth")) {
       return true;

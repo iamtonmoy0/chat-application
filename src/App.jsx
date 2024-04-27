@@ -1,10 +1,8 @@
 import { Outlet } from "react-router-dom";
-import useAuthCheck from "./hook/useAuthCheck";
+import useAuthCheck from "./hooks/useAuthCheck";
 
 function App() {
-  // const [loading, setLoading] = useState(false);
   useAuthCheck();
-
   return (
     <>
       <Outlet />
