@@ -13,7 +13,8 @@ export default function Register() {
   useEffect(() => {
     if (data) {
       console.log(data);
-      navigate("/chat");
+      localStorage.setItem("auth", JSON.stringify(data.data));
+      navigate("/inbox");
     }
     if (isError) {
       window.alert("failed to register account");
@@ -36,7 +37,7 @@ export default function Register() {
     }
   };
   return (
-    <div className="grid place-items-center h-screen bg-[#F9FAFB">
+    <div className="grid place-items-center h-screen bg-[#F9FAFB]">
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>

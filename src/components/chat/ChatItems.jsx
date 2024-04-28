@@ -18,7 +18,7 @@ export default function ChatItems() {
   if (isLoading) {
     content = <p>loading ....</p>;
   } else if (!isLoading && isError) {
-    content = <p>Error occured</p>;
+    content = <p>No Chat List found</p>;
   } else {
     content = conversations?.map((conv) => {
       // console.log(conv._id);
