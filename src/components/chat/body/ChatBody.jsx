@@ -19,19 +19,19 @@ export default function ChatBody() {
   } else if (!isLoading && isError) {
     content = (
       <div>
-        <Error message={"No Chat History Found"} />
+        <Error message={error} />
       </div>
     );
-  } else if (!isLoading && !isError && messages?.length === 0) {
+  } else if (!isLoading && !isError && data.data?.length === 0) {
     content = <div>No messages found!</div>;
-  } else if (!isLoading && !isError && messages?.length > 0) {
+  } else if (!isLoading && !isError && data.data?.length > 0) {
     content = (
       <>
         <ChatHead
           avatar="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
           name="Akash Ahmed"
         />
-        <Messages messages={messages} />
+        <Messages messages={data.data} />
         <Options />
       </>
     );
