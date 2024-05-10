@@ -11,7 +11,7 @@ export default function ChatBody() {
   console.log(id);
 
   const { data, isLoading, isError, error } = useGetMessagesQuery(id);
-  console.log(data, isLoading, isError);
+  console.log(data, isLoading, isError, error);
 
   let content = null;
   if (isLoading) {
@@ -19,7 +19,7 @@ export default function ChatBody() {
   } else if (!isLoading && isError) {
     content = (
       <div>
-        <Error message={error} />
+        <Error message="no message found" />
       </div>
     );
   } else if (!isLoading && !isError && data.data?.length === 0) {
@@ -27,10 +27,7 @@ export default function ChatBody() {
   } else if (!isLoading && !isError && data.data?.length > 0) {
     content = (
       <>
-        <ChatHead
-          avatar="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
-          name="Akash Ahmed"
-        />
+        <ChatHead message={data.data[0]} />
         <Messages messages={data.data} />
         <Options />
       </>
