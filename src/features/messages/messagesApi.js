@@ -7,7 +7,14 @@ const messageApi = apiSlice.injectEndpoints({
         return `/messages?conversationId=${id}&limit=5`;
       },
     }),
+    addMessages: builders.mutation({
+      query: (data) => ({
+        url: "/messages",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetMessagesQuery } = messageApi;
+export const { useGetMessagesQuery, useAddMessagesMutation } = messageApi;

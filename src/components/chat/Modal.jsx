@@ -1,4 +1,19 @@
+import { useState } from "react";
+
 export default function Modal({ open, control }) {
+  const [to, setTo] = useState("");
+  const [message, setMessage] = useState("");
+
+  // search
+  const search = () => {};
+  // debounce
+  const debounceHandler = (fn, delay) => {
+    return (...arg) => {
+      setTimeout(() => {}, delay);
+    };
+  };
+  // handle search
+  const handleSearch = () => {};
   return (
     open && (
       <>
@@ -20,10 +35,11 @@ export default function Modal({ open, control }) {
                 <input
                   id="to"
                   name="to"
-                  type="to"
+                  type="email"
                   required
+                  onChange={handleSearch}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
-                  placeholder="Send to"
+                  placeholder="Enter Email"
                 />
               </div>
               <div>
@@ -33,8 +49,9 @@ export default function Modal({ open, control }) {
                 <textarea
                   id="message"
                   name="message"
-                  type="message"
+                  type="text"
                   required
+                  onChange={(e) => setMessage(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                   placeholder="Message"
                 />
@@ -50,7 +67,7 @@ export default function Modal({ open, control }) {
               </button>
             </div>
 
-            {/* <Error message="There was an error" /> */}
+            <Error message="There was an error" />
           </form>
         </div>
       </>
