@@ -4,16 +4,27 @@ export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
 
-  // search
-  const search = () => {};
   // debounce
   const debounceHandler = (fn, delay) => {
-    return (...arg) => {
-      setTimeout(() => {}, delay);
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        fn(...args);
+      }, delay);
     };
   };
+
+  // search
+
+  const search = (value) => {
+    console.log("hello", value);
+    // console.log(value);
+    setTo(value);
+  };
   // handle search
-  const handleSearch = () => {};
+
+  const handleSearch = debounceHandler(search, 500);
   return (
     open && (
       <>
@@ -37,7 +48,7 @@ export default function Modal({ open, control }) {
                   name="to"
                   type="email"
                   required
-                  onChange={handleSearch}
+                  onChange={(e) => handleSearch(e.target.value)}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                   placeholder="Enter Email"
                 />
@@ -67,7 +78,7 @@ export default function Modal({ open, control }) {
               </button>
             </div>
 
-            <Error message="There was an error" />
+            {/* <Error message="There was an error" /> */}
           </form>
         </div>
       </>
