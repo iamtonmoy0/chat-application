@@ -5,6 +5,11 @@ export const conversationApi = apiSlice.injectEndpoints({
     getConversations: builder.query({
       query: (email) => `/conversations?email=${email}`,
     }),
+    getSingleConversation: builder.query({
+      query: ({ userEmail, participantEmail }) =>
+        `conversation?userEmail=${userEmail}&participantEmail=${participantEmail}`,
+    }),
   }),
 });
-export const { useGetConversationsQuery } = conversationApi;
+export const { useGetConversationsQuery, useGetSingleConversationQuery } =
+  conversationApi;

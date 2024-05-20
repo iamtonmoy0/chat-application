@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGetUserQuery } from "../../features/users/usersApi";
+import Error from "../ui/Error";
+import { useDispatch, useSelector } from "react-redux";
+import { conversationApi } from "../../features/conversations/conversationsApi";
 
 export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
-
+  const [request, setRequest] = useState(false);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { email: myEmail } = user || {};
+  const { data, isLoading, isError } = useGetUserQuery(to, { skip: !request });
+  // console.log(data.data);
+  useEffect(() => {
+    if (data?.data?.email && data?.data?.email !== myEmail) {
+      dispatch(
+        conversationApi.endpoints.getSingleConversation.initiate({
+          userEmail: myEmail,
+          participantEmail: to,
+        })
+      )
+        .unwrap()
+        .then().catch()
+    }
+  }, [data]);
   // debounce
   const debounceHandler = (fn, delay) => {
     let timeoutId;
@@ -18,13 +39,14 @@ export default function Modal({ open, control }) {
   // search
 
   const search = (value) => {
-    console.log("hello", value);
-    // console.log(value);
-    setTo(value);
+    if (value) {
+      setTo(value);
+      setRequest(true);
+    }
   };
   // handle search
 
-  const handleSearch = debounceHandler(search, 500);
+  const handleSearch = debounceHandler(search, 1000);
   return (
     open && (
       <>
@@ -72,13 +94,19 @@ export default function Modal({ open, control }) {
             <div>
               <button
                 type="submit"
+                disabled={isLoading}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
               >
                 Send Message
               </button>
             </div>
 
-            {/* <Error message="There was an error" /> */}
+            {isError ? <Error message="No user found" /> : <></>}
+            {data?.data?.email === myEmail ? (
+              <Error message="You can not send message to your self" />
+            ) : (
+              <></>
+            )}
           </form>
         </div>
       </>
