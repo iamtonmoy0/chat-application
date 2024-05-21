@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import { useGetUserQuery } from "../../features/users/usersApi";
 import Error from "../ui/Error";
 import { useDispatch, useSelector } from "react-redux";
-import { conversationApi } from "../../features/conversations/conversationsApi";
+import {
+  conversationApi,
+  useAddConversationMutation,
+  useEditConversationMutation,
+} from "../../features/conversations/conversationsApi";
+import {
+  useAddMessagesMutation,
+  useEditMessagesMutation,
+} from "../../features/messages/messagesApi";
 
 export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
@@ -16,6 +24,10 @@ export default function Modal({ open, control }) {
   const { email: myEmail } = user || {};
   const { data, isLoading, isError } = useGetUserQuery(to, { skip: !request });
   // console.log(data.data);
+
+  const [addConversation, {}] = useAddConversationMutation();
+  const [addMessages, {}] = useAddMessagesMutation();
+
   useEffect(() => {
     if (data?.data?.email && data?.data?.email !== myEmail) {
       dispatch(
@@ -58,7 +70,19 @@ export default function Modal({ open, control }) {
 
   const handleSearch = debounceHandler(search, 1000);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (conversation) {
+      addMessages({
+        conversationId: conversation[0]._id,
+        sender: user.id,
+        receiver: conversation.users.filter(u._id !== user.id),
+        message,
+      });
+    } else {
+      addConversation();
+    }
+  };
   return (
     open && (
       <>
@@ -70,7 +94,12 @@ export default function Modal({ open, control }) {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Send message
           </h2>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-6"
+            action="#"
+            method="POST"
+          >
             <input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
