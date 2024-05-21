@@ -8,6 +8,9 @@ export default function Modal({ open, control }) {
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
   const [request, setRequest] = useState(false);
+  const [conversation, setConversation] = useState(undefined);
+  const [responseError, setResponseError] = useState("");
+
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { email: myEmail } = user || {};
@@ -22,7 +25,14 @@ export default function Modal({ open, control }) {
         })
       )
         .unwrap()
-        .then().catch()
+        .then((data) => {
+          console.log(data);
+          setConversation(data);
+          console.log(conversation);
+        })
+        .catch((err) => {
+          setResponseError("There was a problem!");
+        });
     }
   }, [data]);
   // debounce
@@ -47,6 +57,8 @@ export default function Modal({ open, control }) {
   // handle search
 
   const handleSearch = debounceHandler(search, 1000);
+
+  const handleSubmit = () => {};
   return (
     open && (
       <>
@@ -107,6 +119,7 @@ export default function Modal({ open, control }) {
             ) : (
               <></>
             )}
+            {responseError && <Error message={responseError} />}
           </form>
         </div>
       </>
