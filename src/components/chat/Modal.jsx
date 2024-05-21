@@ -5,29 +5,31 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   conversationApi,
   useAddConversationMutation,
-  useEditConversationMutation,
 } from "../../features/conversations/conversationsApi";
-import {
-  useAddMessagesMutation,
-  useEditMessagesMutation,
-} from "../../features/messages/messagesApi";
+import { useAddMessagesMutation } from "../../features/messages/messagesApi";
+import { useNavigate } from "react-router-dom";
 
-export default function Modal({ open, control }) {
+export default function Modal({ open, setOpen, control }) {
+  // states
   const [to, setTo] = useState("");
   const [message, setMessage] = useState("");
   const [request, setRequest] = useState(false);
   const [conversation, setConversation] = useState(undefined);
   const [responseError, setResponseError] = useState("");
 
+  // navigation
+  const navigate = useNavigate();
+  // fetch
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { email: myEmail } = user || {};
   const { data, isLoading, isError } = useGetUserQuery(to, { skip: !request });
   // console.log(data.data);
 
-  const [addConversation, {}] = useAddConversationMutation();
+  const [addConversation, { data: newConversation }] =
+    useAddConversationMutation();
   const [addMessages, {}] = useAddMessagesMutation();
-
+  // its looking for previous conversation
   useEffect(() => {
     if (data?.data?.email && data?.data?.email !== myEmail) {
       dispatch(
@@ -38,12 +40,10 @@ export default function Modal({ open, control }) {
       )
         .unwrap()
         .then((data) => {
-          console.log(data.data);
           setConversation(data?.data);
-          console.log(conversation[0]);
         })
         .catch((err) => {
-          setResponseError("There was a problem!");
+          setResponseError("There was a problem!.Please try again");
         });
     }
   }, [data]);
@@ -68,8 +68,8 @@ export default function Modal({ open, control }) {
   };
   // handle search
 
-  const handleSearch = debounceHandler(search, 1000);
-
+  const handleSearch = debounceHandler(search, 2000);
+  // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (conversation && conversation.length > 0) {
@@ -82,10 +82,25 @@ export default function Modal({ open, control }) {
         receiver: receiverData[0]._id,
         message,
       });
-      // TODO: need to close the modal and redirect to the chat page
+      setOpen(false);
+      navigate(`/inbox/${conversation[0]._id}`);
     } else {
-      // addConversation();
-      console.log("error");
+      // Todo :need to create a new conversation and send a message at the same time
+      const conversationData = {
+        participants: [myEmail, to],
+        users: [user.id, data?.data[0]?._id],
+      };
+      console.log(conversationData);
+      // addConversation(conversationData);
+      // if (newConversation) {
+      //   addMessages({
+      //     conversationId: conversationData.data._id,
+      //     sender: user.id,
+      //     receiver: data?.data[0]?._id,
+      //     message,
+      //   });
+      // console.log(newConversation.data);
+      // }
     }
   };
   return (

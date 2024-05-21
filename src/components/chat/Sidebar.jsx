@@ -35,7 +35,7 @@ C139.689,120.449,136.331,117.092,132.189,117.092z"
         <ChatItems />
       </div>
       {/* <Blank /> */}
-      <Modal open={opened} control={controlModal} />
+      <Modal open={opened} setOpen={setOpened} control={controlModal} />
     </div>
   );
 }

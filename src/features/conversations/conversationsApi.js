@@ -14,7 +14,7 @@ export const conversationApi = apiSlice.injectEndpoints({
     // add conversation
     addConversation: builder.mutation({
       query: (data) => ({
-        url: "/conversations",
+        url: "/conversation",
         method: "POST",
         body: data,
       }),
