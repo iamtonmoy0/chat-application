@@ -20,7 +20,7 @@ export default function ChatItems() {
   } else if (!isLoading && isError) {
     content = <p>No Chat List found</p>;
   } else {
-    content = conversations?.map((conv) => {
+    content = conversations?.data?.map((conv) => {
       // console.log(conv._id);
       const data = getParticipant(conv.users, email);
       return (

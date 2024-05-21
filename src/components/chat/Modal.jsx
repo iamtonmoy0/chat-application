@@ -38,9 +38,9 @@ export default function Modal({ open, control }) {
       )
         .unwrap()
         .then((data) => {
-          console.log(data);
-          setConversation(data);
-          console.log(conversation);
+          console.log(data.data);
+          setConversation(data?.data);
+          console.log(conversation[0]);
         })
         .catch((err) => {
           setResponseError("There was a problem!");
@@ -72,15 +72,19 @@ export default function Modal({ open, control }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (conversation) {
+    if (conversation && conversation.length > 0) {
+      const receiverData = conversation[0].users.filter(
+        (u) => u._id !== user.id
+      );
       addMessages({
         conversationId: conversation[0]._id,
         sender: user.id,
-        receiver: conversation.users.filter(u._id !== user.id),
+        receiver: receiverData[0]._id,
         message,
       });
     } else {
-      addConversation();
+      // addConversation();
+      console.log("error");
     }
   };
   return (
