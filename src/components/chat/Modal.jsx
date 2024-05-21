@@ -82,6 +82,7 @@ export default function Modal({ open, control }) {
         receiver: receiverData[0]._id,
         message,
       });
+      // TODO: need to close the modal and redirect to the chat page
     } else {
       // addConversation();
       console.log("error");
