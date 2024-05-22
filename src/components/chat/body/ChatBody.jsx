@@ -8,10 +8,10 @@ import Error from "../../ui/Error";
 
 export default function ChatBody() {
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   const { data, isLoading, isError, error } = useGetMessagesQuery(id);
-  console.log(data, isLoading, isError, error);
+  // console.log(data, isLoading, isError, error);
 
   let content = null;
   if (isLoading) {
@@ -29,7 +29,7 @@ export default function ChatBody() {
       <>
         <ChatHead message={data.data[0]} />
         <Messages messages={data.data} />
-        <Options />
+        <Options conversationId={id} receiverId={data?.data[0]?.receiver._id} />
       </>
     );
   }
