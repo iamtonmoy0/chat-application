@@ -29,7 +29,7 @@ export default function ChatItems() {
             <ChatItem
               avatar={gravatarUrl(data.email, { size: 80 })}
               name={data.name}
-              lastMessage="bye"
+              lastMessage={""}
               lastTime="25 minutes"
             />
           </Link>
