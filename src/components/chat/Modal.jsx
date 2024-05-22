@@ -16,13 +16,15 @@ export default function Modal({ open, setOpen, control }) {
   const [request, setRequest] = useState(false);
   const [conversation, setConversation] = useState(undefined);
   const [responseError, setResponseError] = useState("");
-
+  const [newConv, setNewConv] = useState(undefined);
   // navigation
   const navigate = useNavigate();
   // fetch
   const dispatch = useDispatch();
+  // getting data from state
   const { user } = useSelector((state) => state.auth);
   const { email: myEmail } = user || {};
+  // getting user by email
   const { data, isLoading, isError } = useGetUserQuery(to, { skip: !request });
   // console.log(data.data);
 
@@ -32,6 +34,7 @@ export default function Modal({ open, setOpen, control }) {
   // its looking for previous conversation
   useEffect(() => {
     if (data?.data?.email && data?.data?.email !== myEmail) {
+      // getting the conversation exist or not
       dispatch(
         conversationApi.endpoints.getSingleConversation.initiate({
           userEmail: myEmail,
@@ -42,11 +45,18 @@ export default function Modal({ open, setOpen, control }) {
         .then((data) => {
           setConversation(data?.data);
         })
-        .catch((err) => {
-          setResponseError("There was a problem!.Please try again");
-        });
+        .catch((err) => {});
     }
   }, [data]);
+  // add new messages
+  useEffect(() => {
+    addMessages({
+      conversationId: newConversation?.data?._id,
+      sender: user.id,
+      receiver: data?.data?.id,
+      message,
+    });
+  }, [newConversation]);
   // debounce
   const debounceHandler = (fn, delay) => {
     let timeoutId;
@@ -66,10 +76,10 @@ export default function Modal({ open, setOpen, control }) {
       setRequest(true);
     }
   };
-  // handle search
+  // *handle search
 
   const handleSearch = debounceHandler(search, 2000);
-  // handle submit
+  // *handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (conversation && conversation.length > 0) {
@@ -85,22 +95,14 @@ export default function Modal({ open, setOpen, control }) {
       setOpen(false);
       navigate(`/inbox/${conversation[0]._id}`);
     } else {
-      // Todo :need to create a new conversation and send a message at the same time
+      // *create new conversation and send message
       const conversationData = {
         participants: [myEmail, to],
-        users: [user.id, data?.data[0]?._id],
+        users: [user.id, data?.data?.id],
       };
-      console.log(conversationData);
-      // addConversation(conversationData);
-      // if (newConversation) {
-      //   addMessages({
-      //     conversationId: conversationData.data._id,
-      //     sender: user.id,
-      //     receiver: data?.data[0]?._id,
-      //     message,
-      //   });
-      // console.log(newConversation.data);
-      // }
+      // console.log("no previous conversation found");
+      // console.log(conversationData);
+      addConversation(conversationData);
     }
   };
   return (
@@ -168,6 +170,7 @@ export default function Modal({ open, setOpen, control }) {
             ) : (
               <></>
             )}
+
             {responseError && <Error message={responseError} />}
           </form>
         </div>
