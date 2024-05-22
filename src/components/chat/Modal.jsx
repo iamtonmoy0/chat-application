@@ -56,6 +56,8 @@ export default function Modal({ open, setOpen, control }) {
       receiver: data?.data?.id,
       message,
     });
+    setOpen(false);
+    navigate(`/inbox/${newConversation?.data?._id}`);
   }, [newConversation]);
   // debounce
   const debounceHandler = (fn, delay) => {
@@ -100,8 +102,6 @@ export default function Modal({ open, setOpen, control }) {
         participants: [myEmail, to],
         users: [user.id, data?.data?.id],
       };
-      // console.log("no previous conversation found");
-      // console.log(conversationData);
       addConversation(conversationData);
     }
   };
@@ -119,7 +119,6 @@ export default function Modal({ open, setOpen, control }) {
           <form
             onSubmit={handleSubmit}
             className="mt-8 space-y-6"
-            action="#"
             method="POST"
           >
             <input type="hidden" name="remember" value="true" />
