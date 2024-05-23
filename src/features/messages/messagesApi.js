@@ -13,17 +13,23 @@ const messageApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        // optimistic  cache start
-        apiSlice.util.updateQueryData("getMessages",arg.sender,(draft)=>{
+      // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+      //   // optimistic  cache start
+      //   const result = dispatch(
+      //     apiSlice.util.updateQueryData(
+      //       "getMessages",
+      //       arg.sender,
+      //       (draft) => {
 
-        })
-        // end
-      },
+      //       }
+      //     )
+      //   );
+      //   // end
+      // },
     }),
     editMessages: builders.mutation({
       query: (id, data) => ({
-        url: "/messages",
+        url: `/messages/message=${id}`,
         method: "PUT",
         body: data,
       }),

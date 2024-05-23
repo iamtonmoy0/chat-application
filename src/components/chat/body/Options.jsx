@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useAddMessagesMutation } from "../../../features/messages/messagesApi";
+import {
+  useAddMessagesMutation,
+  useGetMessagesQuery,
+} from "../../../features/messages/messagesApi";
 
 export default function Options({ conversationId, receiverId }) {
   const [message, setMessage] = useState("");
+  const [shouldRefetch, setShouldRefetch] = useState(false);
 
   // state of user
   const { user } = useSelector((state) => state.auth);
   // message query
   const [addMessages, { isSuccess }] = useAddMessagesMutation();
+  
+  // Conditionally trigger the query based on shouldRefetch state
+  const { data, refetch } = useGetMessagesQuery(conversationId, {
+    skip: !shouldRefetch,
+  });
 
   // handle submit
   const handleSubmit = (e) => {
@@ -21,11 +30,20 @@ export default function Options({ conversationId, receiverId }) {
     };
     addMessages(data);
   };
+
   useEffect(() => {
     if (isSuccess) {
       setMessage("");
+      setShouldRefetch(true);
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (shouldRefetch) {
+      refetch();
+      setShouldRefetch(false);
+    }
+  }, [shouldRefetch, refetch]);
 
   return (
     <form

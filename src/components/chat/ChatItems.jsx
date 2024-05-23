@@ -4,6 +4,7 @@ import ChatItem from "./ChatItem";
 import getParticipant from "../../utils/getParticipants";
 import gravatarUrl from "gravatar-url";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default function ChatItems() {
   const { user } = useSelector((state) => state.auth);
@@ -30,7 +31,7 @@ export default function ChatItems() {
               avatar={gravatarUrl(data.email, { size: 80 })}
               name={data.name}
               lastMessage={""}
-              lastTime="25 minutes"
+              lastTime={moment(conv.createdAt).fromNow()}
             />
           </Link>
         </li>
