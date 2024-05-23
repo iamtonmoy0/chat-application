@@ -64,6 +64,4 @@ Open a pull request.
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-Acknowledgments
-Thanks to the developers of Node.js, Express, Socket.io, and MongoDB for their amazing tools.
-For any questions or feedback, please feel free to contact me at iamtonmoy0@gmail.com.
+
